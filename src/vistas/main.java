@@ -22,10 +22,17 @@ public class main {
     public static void main(String[] args) {
         LocalDate fecha = LocalDate.now();
         Alumno alum1 = new Alumno(123456, "Perez", "Jose", fecha, true);
-        new main().conectar(alum1);
-        System.out.println("Alumno: " + alum1.getNombre() + " Guardado con exito");
-        new main().elim(alum1);
-        System.out.println("Alumno: " + alum1.getNombre() + " Fue dado de baja");
+//        new main().conectar(alum1);
+//        System.out.println("Alumno: " + alum1.getNombre() + " Guardado con exito");
+//        new main().elim(alum1);
+//        System.out.println("Alumno: " + alum1.getNombre() + " Fue dado de baja");
+        Conexion conexion = new Conexion("jdbc:mysql://localhost/universidad", "root", "");
+        AlumnoData alumnoData = new AlumnoData(conexion);
+//        Alumno alum2 = new Alumno(7,123456, "Perez", "Jose", fecha, true);
+//        alumnoData.actualizarAlumno(alum2);
+        alumnoData.borradoFisico(7);
+        
+        
     }
     void conectar(Alumno alum){
         conexion = new Conexion("jdbc:mysql://localhost/universidad", "root", "");

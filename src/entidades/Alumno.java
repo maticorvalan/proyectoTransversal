@@ -12,24 +12,24 @@ import java.time.LocalDate;
  */
 public class Alumno {
     private int idAlumno;             
-    private int año;                 
+    private int dni;                 
     private String apellido;         
     private String nombre;              
     private LocalDate fechaNacimiento;  
     private boolean estado;      
 
     
-    public Alumno(int idAlumno, int año, String apellido, String nombre, LocalDate fechaNacimiento, boolean estado) {
+    public Alumno(int idAlumno, int dni, String apellido, String nombre, LocalDate fechaNacimiento, boolean estado) {
         this.idAlumno = idAlumno;
-        this.año = año;
+        this.dni = dni;
         this.apellido = apellido;
         this.nombre = nombre;
         this.fechaNacimiento = fechaNacimiento;
         this.estado = estado;
     }
 
-    public Alumno(int año, String apellido, String nombre, LocalDate fechaNacimiento, boolean estado) {
-        this.año = año;
+    public Alumno(int dni, String apellido, String nombre, LocalDate fechaNacimiento, boolean estado) {
+        this.dni = dni;
         this.apellido = apellido;
         this.nombre = nombre;
         this.fechaNacimiento = fechaNacimiento;
@@ -38,10 +38,7 @@ public class Alumno {
 
     public Alumno() {
     }
-    
-    
-    
-
+   
     public int getIdAlumno() {
         return idAlumno;
     }
@@ -50,12 +47,12 @@ public class Alumno {
         this.idAlumno = idAlumno;
     }
 
-    public int getAño() {
-        return año;
+    public int getDni() {
+        return dni;
     }
 
-    public void setAño(int año) {
-        this.año = año;
+    public void setDni(int dni) {
+        this.dni = dni;
     }
 
     public String getApellido() {
@@ -92,7 +89,7 @@ public class Alumno {
 
     @Override
     public String toString() {
-        return "Alumno : ID : " + idAlumno + " / Año :" + año + " / Apellido : " + apellido + " / Nombre : " + nombre + " / Fecha Nacimiento : " + fechaNacimiento + " / Estado : " + estado ;
+        return "Alumno : ID : " + idAlumno + " / DNI :" + dni + " / Apellido : " + apellido + " / Nombre : " + nombre + " / Fecha Nacimiento : " + fechaNacimiento + " / Estado : " + estado ;
     }
   
     

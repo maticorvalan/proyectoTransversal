@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 02-10-2024 a las 07:42:42
+-- Tiempo de generación: 04-10-2024 a las 00:17:26
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -37,6 +37,13 @@ CREATE TABLE `alumno` (
   `fechaNacimiento` date DEFAULT NULL,
   `estado` tinyint(1) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `alumno`
+--
+
+INSERT INTO `alumno` (`idAlumno`, `dni`, `apellido`, `nombre`, `fechaNacimiento`, `estado`) VALUES
+(7, 123456, 'Perez', 'Jose', '2024-10-03', 0);
 
 -- --------------------------------------------------------
 
@@ -72,7 +79,9 @@ CREATE TABLE `materia` (
 -- Indices de la tabla `alumno`
 --
 ALTER TABLE `alumno`
-  ADD PRIMARY KEY (`idAlumno`);
+  ADD PRIMARY KEY (`idAlumno`),
+  ADD UNIQUE KEY `dni` (`dni`),
+  ADD UNIQUE KEY `dni_2` (`dni`);
 
 --
 -- Indices de la tabla `inscripcion`
@@ -86,7 +95,9 @@ ALTER TABLE `inscripcion`
 -- Indices de la tabla `materia`
 --
 ALTER TABLE `materia`
-  ADD PRIMARY KEY (`idMateria`);
+  ADD PRIMARY KEY (`idMateria`),
+  ADD UNIQUE KEY `nombre` (`nombre`),
+  ADD UNIQUE KEY `nombre_2` (`nombre`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
@@ -96,7 +107,7 @@ ALTER TABLE `materia`
 -- AUTO_INCREMENT de la tabla `alumno`
 --
 ALTER TABLE `alumno`
-  MODIFY `idAlumno` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idAlumno` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- Restricciones para tablas volcadas

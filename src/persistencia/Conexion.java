@@ -34,10 +34,10 @@ public class Conexion {
             try {
                 Class.forName("org.mariadb.jdbc.Driver");
                 conexion=DriverManager.getConnection(url,usuario,password);
+                System.out.println("Conecto correctamente");
             } catch (SQLException | ClassNotFoundException ex) {
                 System.out.println("No se puede conectar o no se puede cargar el driver. Error "+ex.getMessage());
             }
-            
         }
         return conexion;
     }

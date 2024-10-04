@@ -26,7 +26,7 @@ public class MateriaData {
     
   
     
-     public void agregarMateria(Materia materia) {
+     public void guardarMateria(Materia materia) {
         String query= "INSERT INTO materia (nombre, descripcion, estado) VALUES (?, ?, ?)";
         try {
             PreparedStatement ps = conexion.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
@@ -86,10 +86,35 @@ public class MateriaData {
         } catch (SQLException e) {
             System.out.println("Error al actualizar materia: " + e.getMessage());
         }
+        
+        
+        
+    }
+      public Materia buscarMateria(int id){
+        Materia materia=null;
+         String query = "SELECT * FROM `alumno` WHERE idAlumno = ? ";
+        try {
+            PreparedStatement ps = conexion.prepareStatement(query);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                materia = new Materia();
+               materia.setId_materia(rs.getInt("idMateria"));
+                materia.setNombre(rs.getString("nombre"));
+                materia.setEstado(rs.getBoolean("estado"));
+                System.out.println("Alumno Encontrado");
+            } else{
+                System.out.println("No existe ese alumno");
+            }
+            ps.close();            
+        } catch (SQLException ex) {
+            System.out.println("SE PRODUJO UN ERROR CON LA BASE DE DATOS BUSCANDOLO");
+        }
+        return materia;
     }
 
     public void borrarMateria(int id) {
-        String sql = "DELETE FROM materia WHERE id = ?";
+        String sql = "DELETE FROM materia WHERE idMateria = ?";
         try {
             PreparedStatement ps = conexion.prepareStatement(sql);
             ps.setInt(1, id);
@@ -112,16 +137,6 @@ public class MateriaData {
         }
     }
 
-    public void altaLogica(int id) {
-        String query = "UPDATE materia SET activo = 1 WHERE id = ?";
-        try {
-            PreparedStatement ps = conexion.prepareStatement(query);
-            ps.setInt(1, id);
-            ps.executeUpdate();
-            System.out.println("Alta lógica aplicada a la materia con ID: " + id);
-        } catch (SQLException e) {
-            System.out.println("Error en alta lógica: " + e.getMessage());
-        }
-    }
+    
     
 }

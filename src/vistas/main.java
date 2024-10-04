@@ -9,6 +9,8 @@ import java.time.LocalDate;
 import persistencia.AlumnoData;
 import persistencia.Conexion;
 
+import entidades.Materia;
+import persistencia.MateriaData;
 /**
  *
  * @author Matias
@@ -34,6 +36,12 @@ public class main {
         Menu menu= new Menu();
         menu.setVisible(true);
        
+        
+        Materia mat1 =new Materia("Matematica","Logica",true);
+        conexion = new Conexion ("jdbc:mysql://localhost/universidad", "root", "");
+        MateriaData materiaData = new MateriaData(conexion); 
+        
+        
     
     }
     
@@ -50,5 +58,13 @@ public class main {
         alumnoData.borradoLogico(alum.getIdAlumno());
         Alumno alu = alumnoData.buscarAlumno(alum.getIdAlumno());
         System.out.println("Datos: " + alu);
+    }
+    
+    void conectar (Materia mat){
+        conexion = new Conexion ("jdbc:mysql://localhost/universidad", "root", "");
+         MateriaData materiaData = new MateriaData(conexion);
+         materiaData.guardarMateria(mat);
+         Materia ma = materiaData.buscarMateria(mat.getId_materia());
+         System.out.println("Datos" + ma);
     }
 }

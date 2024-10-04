@@ -30,10 +30,13 @@ public class main {
         AlumnoData alumnoData = new AlumnoData(conexion);
 //        Alumno alum2 = new Alumno(7,123456, "Perez", "Jose", fecha, true);
 //        alumnoData.actualizarAlumno(alum2);
-        alumnoData.borradoFisico(7);
-        
-        
+//        alumnoData.borradoFisico(7);       
+        Menu menu= new Menu();
+        menu.setVisible(true);
+       
+    
     }
+    
     void conectar(Alumno alum){
         conexion = new Conexion("jdbc:mysql://localhost/universidad", "root", "");
         alumnoData = new AlumnoData(conexion);

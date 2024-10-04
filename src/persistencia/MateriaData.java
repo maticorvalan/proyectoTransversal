@@ -55,7 +55,7 @@ public class MateriaData {
 
             while (rs.next()) {
             Materia materia = new Materia(); 
-                materia.setId_materia(rs.getInt("id"));
+                materia.setId_materia(rs.getInt("idMateria"));
                 materia.setNombre(rs.getString("nombre"));
                 materia.setDescripción(rs.getString("descripcion"));
                 materia.setEstado(rs.getBoolean("estado"));
@@ -73,7 +73,7 @@ public class MateriaData {
     }
 
     public void actualizarMateria(Materia materia) {
-        String query= "UPDATE materia SET nombre = ?, descripcion = ?, estado = ? WHERE id = ?";
+        String query= "UPDATE materia SET nombre = ?, descripcion = ?, estado = ? WHERE idMateria = ?";
         try {
             PreparedStatement ps = conexion.prepareStatement(query);
             ps.setString(1, materia.getNombre());
@@ -101,7 +101,7 @@ public class MateriaData {
     }
 
     public void bajaLogica(int id) {
-        String query = "UPDATE materia SET activo = 0 WHERE id = ?";
+        String query = "UPDATE materia SET estado = false WHERE idMateria = ?";
         try {
             PreparedStatement ps = conexion.prepareStatement(query);
             ps.setInt(1, id);

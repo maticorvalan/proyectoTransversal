@@ -92,7 +92,7 @@ public class MateriaData {
     }
       public Materia buscarMateria(int id){
         Materia materia=null;
-         String query = "SELECT * FROM `alumno` WHERE idAlumno = ? ";
+         String query = "SELECT * FROM `materia` WHERE idMateria = ? ";
         try {
             PreparedStatement ps = conexion.prepareStatement(query);
             ps.setInt(1, id);
@@ -102,13 +102,13 @@ public class MateriaData {
                materia.setId_materia(rs.getInt("idMateria"));
                 materia.setNombre(rs.getString("nombre"));
                 materia.setEstado(rs.getBoolean("estado"));
-                System.out.println("Alumno Encontrado");
+                System.out.println("Materia encontrada");
             } else{
-                System.out.println("No existe ese alumno");
+                System.out.println("No existe esa materia");
             }
             ps.close();            
         } catch (SQLException ex) {
-            System.out.println("SE PRODUJO UN ERROR CON LA BASE DE DATOS BUSCANDOLO");
+            System.out.println("Error al buscar la materia");
         }
         return materia;
     }

@@ -21,6 +21,18 @@ public class Materia {
         this.estado = estado;
     }
 
+    public Materia(String nombre, String descripción, boolean estado) {
+        this.nombre = nombre;
+        this.descripción = descripción;
+        this.estado = estado;
+    }
+
+    public Materia() {
+       
+    }
+    
+  
+
     public int getId_materia() {
         return id_materia;
     }
@@ -53,6 +65,11 @@ public class Materia {
         this.estado = estado;
     }
     
+    @Override 
+    public String toString (){
+        return "Materia: ID : " + id_materia + " /Nombre:  " + nombre + " /Descripcion: " + descripción + "/Estado: " + estado;
+        
     
+}
     
 }

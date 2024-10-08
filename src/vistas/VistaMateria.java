@@ -197,7 +197,7 @@ public class VistaMateria extends javax.swing.JInternalFrame {
             }
         }
         if (!validacion) {
-            materiaData.agregarMateria(new Materia(nombre, descripcion, estado));
+            materiaData.guardarMateria(new Materia(nombre, descripcion, estado));
             borrarFilasTablas();
             cargarFilas();
             limpiarCampos();

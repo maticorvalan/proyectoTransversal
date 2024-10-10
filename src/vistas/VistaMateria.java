@@ -126,7 +126,7 @@ public class VistaMateria extends javax.swing.JInternalFrame {
                                 .addComponent(jcbEstado)
                                 .addComponent(jtDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGap(50, 50, 50)
-                            .addComponent(jbGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jbGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 494, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -202,9 +202,6 @@ public class VistaMateria extends javax.swing.JInternalFrame {
             cargarFilas();
             limpiarCampos();
         }
-        
-        
-        
     }//GEN-LAST:event_jbGuardarActionPerformed
 
     private void jbBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbBorrarActionPerformed
@@ -213,7 +210,7 @@ public class VistaMateria extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, "Porfavor seleccione una fila de la Tabla");
         } else {
             int id = (int) jTableMateria.getValueAt(row, 0);
-            materiaData.bajaLogica(id);
+            materiaData.borrarMateria(id);
             borrarFilasTablas();
             cargarFilas();
             limpiarCampos();
@@ -227,7 +224,8 @@ public class VistaMateria extends javax.swing.JInternalFrame {
             int id = (int) jTableMateria.getValueAt(row, 0);
             String nombre =(String) jTableMateria.getValueAt(row, 1);
             String descripcion =(String) jTableMateria.getValueAt(row, 2);
-            boolean estado =(boolean) jTableMateria.getValueAt(row, 3);
+            String estadoString = (String) jTableMateria.getValueAt(row, 3);
+            boolean estado = estadoString.equals("Activo"); 
                        
             jtNombre.setText(nombre);
             jtDescripcion.setText(descripcion);           
@@ -296,7 +294,7 @@ public class VistaMateria extends javax.swing.JInternalFrame {
                 listaMateria.getId_materia(),
                 listaMateria.getNombre(),
                 listaMateria.getDescripción(),
-                listaMateria.isEstado()                              
+                listaMateria.isEstado() ? "Activo" : "No Activo"                         
             });
         }    
     }

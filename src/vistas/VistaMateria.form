@@ -42,7 +42,7 @@
                               <Component id="jtDescripcion" alignment="0" min="-2" pref="250" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
-                          <Component id="jbGuardar" min="-2" pref="75" max="-2" attributes="0"/>
+                          <Component id="jbGuardar" min="-2" pref="84" max="-2" attributes="0"/>
                       </Group>
                       <Component id="jScrollPane1" min="-2" pref="494" max="-2" attributes="0"/>
                   </Group>

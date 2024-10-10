@@ -240,6 +240,8 @@ public class VistaAlumno extends javax.swing.JInternalFrame {
         int row = tabla.getSelectedRow();
         if(row == -1){
             JOptionPane.showMessageDialog(this, "Por favor seleccione una fila de la tabla");
+        } else if(!validarCampos()) {
+            
         } else {
             int id = (int) tabla.getValueAt(row, 0);
             String nombre = insertName.getText();
@@ -352,18 +354,26 @@ public class VistaAlumno extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, "Ingrese un nombre.");
             return false;
         } 
+        if (!validarSoloLetras(insertName.getText())) {
+            JOptionPane.showMessageDialog(this, "El nombre solo debe contener letras.");
+            return false;
+        }
         if (insertSurname.getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Ingrese un apellido.");
             return false;
         }
+        if (!validarSoloLetras(insertSurname.getText())) {
+            JOptionPane.showMessageDialog(this, "El apellido solo debe contener letras.");
+            return false;
+        }
         if (insertDNI.getText().trim().isEmpty() || insertDNI.getText().length() > 8) {
-            JOptionPane.showMessageDialog(this, "Ingrese un DNI y que sea menor que 8 digitos.");
+            JOptionPane.showMessageDialog(this, "Ingrese un DNI válido (máximo 8 dígitos).");
             return false;
         }
         try {
             Integer.parseInt(insertDNI.getText());
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Ingrese un DNI válido (debe ser numérico).");
+            JOptionPane.showMessageDialog(this, "El DNI debe ser numérico.");
             return false;
         }
         if (fecha.getDate() == null) {
@@ -371,5 +381,9 @@ public class VistaAlumno extends javax.swing.JInternalFrame {
             return false;
         }
         return true;
-}
+    }
+
+    private boolean validarSoloLetras(String texto) {
+        return texto.matches("[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]+");
+    }
 }

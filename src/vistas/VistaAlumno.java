@@ -51,6 +51,7 @@ public class VistaAlumno extends javax.swing.JInternalFrame {
         fecha = new com.toedter.calendar.JDateChooser();
         estado = new javax.swing.JCheckBox();
         jLabel6 = new javax.swing.JLabel();
+        jbSalir = new javax.swing.JButton();
 
         jLabel1.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
         jLabel1.setText("Alumnos");
@@ -119,6 +120,13 @@ public class VistaAlumno extends javax.swing.JInternalFrame {
 
         jLabel6.setText("Estado:");
 
+        jbSalir.setText("Salir");
+        jbSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbSalirActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -165,6 +173,10 @@ public class VistaAlumno extends javax.swing.JInternalFrame {
                         .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 540, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 6, Short.MAX_VALUE))))
             .addComponent(jScrollPane1)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jbSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(57, 57, 57))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -199,8 +211,10 @@ public class VistaAlumno extends javax.swing.JInternalFrame {
                 .addGap(3, 3, 3)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(24, 24, 24))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(28, 28, 28)
+                .addComponent(jbSalir)
+                .addGap(38, 38, 38))
         );
 
         pack();
@@ -290,6 +304,10 @@ public class VistaAlumno extends javax.swing.JInternalFrame {
         estado.setSelected(activo);
     }//GEN-LAST:event_tablaMouseClicked
 
+    private void jbSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSalirActionPerformed
+       this.dispose();
+    }//GEN-LAST:event_jbSalirActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Actualizar;
@@ -308,6 +326,7 @@ public class VistaAlumno extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JButton jbSalir;
     private javax.swing.JTable tabla;
     // End of variables declaration//GEN-END:variables
     private DefaultTableModel modelo = new DefaultTableModel(){

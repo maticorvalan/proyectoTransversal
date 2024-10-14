@@ -9,55 +9,72 @@ package entidades;
  * @author Nicolas
  */
 public class Inscripcion {
-        private  int  id_inscripto;
-        private int id_alumno ; 
-        private int id_materia;
-        private int nota;
+        private  int  idinscripcion;
+        private Alumno alumno; 
+        private Materia materia;
+        private double nota;
 
-    public Inscripcion(int id_inscripto, int id_alumno, int id_materia, int nota) {
-        this.id_inscripto = id_inscripto;
-        this.id_alumno = id_alumno;
-        this.id_materia = id_materia;
+    public Inscripcion(int id_inscripto, Alumno alumno, Materia materia, double nota) {
+        this.idinscripcion = id_inscripto;
+        this.alumno = alumno;
+        this.materia = materia;
         this.nota = nota;
     }
-
-    public int getId_inscripto() {
-        return id_inscripto;
+    public Inscripcion(Alumno alumno, Materia materia, double nota){
+        this.alumno = alumno;
+        this.materia = materia;
+        this.nota = nota;
+    }
+    public Inscripcion(){
+        idinscripcion = 0;
+        alumno = null;
+        materia = null;
+        nota = 0;
+    }
+    public Inscripcion(double nota){
+        this.nota = nota;
+    }
+    public int getIdinscripcion() {
+        return idinscripcion;
     }
 
-    public void setId_inscripto(int id_inscripto) {
-        this.id_inscripto = id_inscripto;
+    public void setIdinscripcion(int idinscripcion) {
+        this.idinscripcion = idinscripcion;
     }
 
-    public int getId_alumno() {
-        return id_alumno;
+    public Alumno getAlumno() {
+        return alumno;
     }
 
-    public void setId_alumno(int id_alumno) {
-        this.id_alumno = id_alumno;
+    public void setAlumno(Alumno alumno) {
+        this.alumno = alumno;
     }
 
-    public int getId_materia() {
-        return id_materia;
+    public Materia getMateria() {
+        return materia;
     }
 
-    public void setId_materia(int id_materia) {
-        this.id_materia = id_materia;
+    public void setMateria(Materia materia) {
+        this.materia = materia;
     }
 
-    public int getNota() {
+    public double getNota() {
         return nota;
     }
 
-    public void setNota(int nota) {
+    public void setNota(double nota) {
         this.nota = nota;
     }
- 
-
-
-
-
-
-
-
+    public int getIdAlumno(){
+        return getAlumno().getIdAlumno();
+    }
+    public void setIdAlumno(int idAlumno){
+        getAlumno().setIdAlumno(idAlumno);
+    }
+    public int getIdMateria(){
+        return getMateria().getId_materia();
+    }
+    public void setIdMateria(int idMateria){
+        getMateria().setId_materia(idMateria);
+    }
 }

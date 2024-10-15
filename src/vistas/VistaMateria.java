@@ -4,10 +4,12 @@
  */
 package vistas;
 
+import entidades.Inscripcion;
 import entidades.Materia;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import persistencia.Conexion;
+import persistencia.InscripcionData;
 import persistencia.MateriaData;
 
 /**
@@ -17,6 +19,7 @@ import persistencia.MateriaData;
 public class VistaMateria extends javax.swing.JInternalFrame {
     private Conexion conexion = new Conexion("jdbc:mysql://localhost/universidad", "root", "");
     private MateriaData materiaData = new MateriaData(conexion);
+    private InscripcionData inscripcionData= new InscripcionData(conexion);
    
     public VistaMateria() {
         initComponents();
@@ -207,9 +210,15 @@ public class VistaMateria extends javax.swing.JInternalFrame {
     private void jbBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbBorrarActionPerformed
         int row = jTableMateria.getSelectedRow(); //Esto me indica el numero de la fila seleccionado
         if (row==-1) {
-            JOptionPane.showMessageDialog(this, "Porfavor seleccione una fila de la Tabla");
+            JOptionPane.showMessageDialog(this, "Porfavor seleccione una Materia de la Tabla");
         } else {
             int id = (int) jTableMateria.getValueAt(row, 0);
+            for (Inscripcion inscripcion : inscripcionData.obtenerInscripciones()) {
+                if (inscripcion.getIdMateria()==materiaData.buscarMateria(id).getId_materia()) {
+                    inscripcionData.borrarInscripcionMateriaAlumno(inscripcion.getIdAlumno(), id);
+                }
+            }
+          
             materiaData.borrarMateria(id);
             borrarFilasTablas();
             cargarFilas();

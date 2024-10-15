@@ -19,6 +19,7 @@ public class VistaAlumno extends javax.swing.JInternalFrame {
 
     private Conexion conexion = new Conexion("jdbc:mysql://localhost/universidad", "root", "");
     private AlumnoData alumnoData = new AlumnoData(conexion);
+    private InscripcionData inscripcionData = new InscripcionData(conexion);
     public VistaAlumno() {
         initComponents();
         armarTabla();
@@ -137,12 +138,6 @@ public class VistaAlumno extends javax.swing.JInternalFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(Crear, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(36, 36, 36)
-                                .addComponent(Borrar, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(33, 33, 33)
-                                .addComponent(Actualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addGroup(layout.createSequentialGroup()
                                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -158,16 +153,24 @@ public class VistaAlumno extends javax.swing.JInternalFrame {
                                         .addComponent(insertSurname, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addGroup(layout.createSequentialGroup()
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addGap(98, 98, 98)
-                                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGroup(layout.createSequentialGroup()
                                             .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                             .addComponent(estado)))
-                                    .addGap(23, 23, 23)
-                                    .addComponent(fecha, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addGap(84, 84, 84)
+                                    .addComponent(fecha, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(Crear, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(36, 36, 36)
+                                        .addComponent(Borrar, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(33, 33, 33))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(12, 12, 12)))
+                                .addComponent(Actualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(114, 114, 114))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 540, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -230,7 +233,7 @@ public class VistaAlumno extends javax.swing.JInternalFrame {
             validacion = true;
             }else {
                     if(!estado.isSelected()){
-                        int respuesta = JOptionPane.showConfirmDialog(null, "¿Deseas guardar la Materia con el Estado en false?", "Confirmación", JOptionPane.OK_CANCEL_OPTION);
+                        int respuesta = JOptionPane.showConfirmDialog(null, "¿Deseas guardar la Alumno con el Estado en false?", "Confirmación", JOptionPane.OK_CANCEL_OPTION);
                         if (respuesta == JOptionPane.CANCEL_OPTION) {
                             validacion=true;
                         }
@@ -275,9 +278,14 @@ public class VistaAlumno extends javax.swing.JInternalFrame {
     private void BorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BorrarActionPerformed
         int row = tabla.getSelectedRow();
         if (row == -1) {
-            JOptionPane.showMessageDialog(this, "Por favor seleccione una fila en la tabla");
+            JOptionPane.showMessageDialog(this, "Por favor seleccione un Alumno de la tabla");
         } else {
            int id = (int) tabla.getValueAt(row, 0);
+            for (Inscripcion inscripcion : inscripcionData.obtenerInscripciones()) {
+                if (inscripcion.getIdAlumno()==alumnoData.buscarAlumno(id).getIdAlumno()){
+                    inscripcionData.borrarInscripcionMateriaAlumno(id, inscripcion.getIdMateria());
+                }
+            }
            alumnoData.borradoFisico(id);
            borrarFilasTablas();
            cargarFilas();
@@ -305,7 +313,7 @@ public class VistaAlumno extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_tablaMouseClicked
 
     private void jbSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSalirActionPerformed
-       this.dispose();
+       this.dispose();//
     }//GEN-LAST:event_jbSalirActionPerformed
 
 

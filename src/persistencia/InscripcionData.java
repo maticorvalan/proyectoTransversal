@@ -27,6 +27,8 @@ public class InscripcionData {
         this.md = new MateriaData(conexion);
         this.ad = new AlumnoData(conexion);
     }
+    
+    //idInscripto en nuestra base de datos no es incremental no genera keys
     public void guardarInscripcion(Inscripcion insc){
         String query ="INSERT INTO inscripcion(idAlumno,idMateria,nota) VALUES(?,?,?)";
         
@@ -70,7 +72,7 @@ public class InscripcionData {
         }
         
     }
-    
+    //PORQUE NO BUSCARMOS LA INSCRIPCION POR ID EN VES DE idAlumno ...
     public void borrarInscripcionMateriaAlumno(int idAlumno, int idMateria){
         String query = "DELETE FROM inscripcion WHERE idAlumno = ? AND idMateria = ?";
         
@@ -143,7 +145,7 @@ public class InscripcionData {
         ArrayList<Materia> materias = new ArrayList<>();
         String query = "SELECT inscripcion.idMateria,nombre, año FROM inscripcion,"
                         + " materia WHERE incripciones.idMateria = materia.idMateria"
-                        + "AND inscripcion.idAlumno = ?";   
+                        + "AND inscripcion.idAlumno = ?"; //REVISAR-- 
         try {
             PreparedStatement ps = conexion.prepareStatement(query);
             ps.setInt(1, idMateria);
@@ -163,6 +165,7 @@ public class InscripcionData {
 
         return materias;
     }
+    
     public List<Materia> obtenerMateriasNOCursadas(int idAlumno){
         ArrayList<Materia> materias = new ArrayList<>();
         String query = "SELECT * FROM materia WHERE estado = 1 AND idMateria not in "
@@ -186,6 +189,7 @@ public class InscripcionData {
 
         return materias;
     }
+    
     public List<Alumno> obtenerAlumnosXMateria(int idMateria){
         ArrayList<Alumno> alumnos = new ArrayList<>();
         String query = "SELECT a.idAlumno, dni, nombre, apellido, fechaNacimiento, estado "

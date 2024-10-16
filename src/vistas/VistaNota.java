@@ -170,18 +170,11 @@ public class VistaNota extends javax.swing.JInternalFrame {
 
     private void jbGUARDARMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbGUARDARMouseClicked
 Alumno alumno = (Alumno) ListaAlumnoCombo.getSelectedItem();
-        System.out.println("1");
-int fila = TablaInscripcion.getSelectedRow() ;
-        System.out.println("2");
-        System.out.println(TablaInscripcion.getValueAt( fila,  0 ));        
+int fila = TablaInscripcion.getSelectedRow() ;             
 Integer idMateria =(Integer) TablaInscripcion.getValueAt( fila,  0);
-        System.out.println("3");
 Materia materia = materiaData.buscarMateria(idMateria );
-        System.out.println("4");
 int nota = (int) jSpinner1.getValue();
-        System.out.println("5");
 inscripcionData.actualizarNota(alumno.getIdAlumno(), idMateria, nota);
-        System.out.println("6");
 borrarFilasTablas();
 cargarFilas();
     }//GEN-LAST:event_jbGUARDARMouseClicked

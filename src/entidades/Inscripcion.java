@@ -77,4 +77,4 @@ public class Inscripcion {
     public void setIdMateria(int idMateria){
         getMateria().setId_materia(idMateria);
     }
-}
+    }

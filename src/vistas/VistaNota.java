@@ -25,6 +25,7 @@ public class VistaNota extends javax.swing.JInternalFrame {
   private AlumnoData alumnoData = new AlumnoData(conexion);  
   private MateriaData materiaData = new MateriaData(conexion);
   private List <Inscripcion> lista;
+  private List<Inscripcion> listaOriginal;
   
     /**
      * Creates new form vis
@@ -51,8 +52,6 @@ public class VistaNota extends javax.swing.JInternalFrame {
         ListaAlumnoCombo = new javax.swing.JComboBox();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jSpinner1 = new javax.swing.JSpinner();
         jbGUARDAR = new javax.swing.JButton();
 
         TablaInscripcion.setModel(new javax.swing.table.DefaultTableModel(
@@ -74,6 +73,11 @@ public class VistaNota extends javax.swing.JInternalFrame {
         jScrollPane1.setViewportView(TablaInscripcion);
 
         jButton2.setText("Salir");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         ListaAlumnoCombo.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
@@ -87,8 +91,6 @@ public class VistaNota extends javax.swing.JInternalFrame {
         jLabel2.setForeground(new java.awt.Color(200, 200, 200));
         jLabel2.setText("Agregar Nota");
         jLabel2.setPreferredSize(new java.awt.Dimension(100, 40));
-
-        jLabel3.setText("Actualizar nota");
 
         jbGUARDAR.setText("Guardar");
         jbGUARDAR.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -107,30 +109,25 @@ public class VistaNota extends javax.swing.JInternalFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap(48, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap(48, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(86, 86, 86)
-                                .addComponent(ListaAlumnoCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(20, 20, 20))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(29, 29, 29)
-                        .addComponent(jLabel3)
-                        .addGap(18, 18, 18)
-                        .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(50, 50, 50)
-                        .addComponent(jbGUARDAR, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(86, 86, 86)
+                        .addComponent(ListaAlumnoCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(20, 20, 20))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(46, 46, 46))
             .addGroup(layout.createSequentialGroup()
                 .addGap(216, 216, 216)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(108, 108, 108)
+                .addComponent(jbGUARDAR, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(151, 151, 151))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -146,8 +143,6 @@ public class VistaNota extends javax.swing.JInternalFrame {
                 .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3)
-                    .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jbGUARDAR, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(65, 65, 65))
         );
@@ -169,15 +164,30 @@ public class VistaNota extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jbGUARDARActionPerformed
 
     private void jbGUARDARMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbGUARDARMouseClicked
-Alumno alumno = (Alumno) ListaAlumnoCombo.getSelectedItem();
-int fila = TablaInscripcion.getSelectedRow() ;             
-Integer idMateria =(Integer) TablaInscripcion.getValueAt( fila,  0);
-Materia materia = materiaData.buscarMateria(idMateria );
-int nota = (int) jSpinner1.getValue();
-inscripcionData.actualizarNota(alumno.getIdAlumno(), idMateria, nota);
-borrarFilasTablas();
-cargarFilas();
+    Alumno alumno = (Alumno) ListaAlumnoCombo.getSelectedItem();
+    
+    for (int fila = 0; fila < TablaInscripcion.getRowCount(); fila++) {
+        int idMateria = (int) TablaInscripcion.getValueAt(fila, 0);
+        Inscripcion inscripcionOriginal = listaOriginal.get(fila);
+        double valorNota = Double.parseDouble(TablaInscripcion.getValueAt(fila, 2).toString());
+
+        if (inscripcionOriginal.getNota() != valorNota) {
+            System.out.println("Actualizando nota para materia " + idMateria + " a " + valorNota);
+            inscripcionData.actualizarNota(alumno.getIdAlumno(), idMateria, valorNota);
+        }
+        System.out.println("Alumno: " + alumno.getIdAlumno());
+        System.out.println("Materia: " + idMateria);
+        System.out.println("Nueva Nota: " + valorNota);
+    }
+    
+    // Refrescamos la tabla
+    borrarFilasTablas();
+    cargarFilas();
     }//GEN-LAST:event_jbGUARDARMouseClicked
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        dispose();        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -186,14 +196,12 @@ cargarFilas();
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JSpinner jSpinner1;
     private javax.swing.JButton jbGUARDAR;
     // End of variables declaration//GEN-END:variables
 private DefaultTableModel modelo = new DefaultTableModel(){
         public boolean isCellEditable(int fila, int columna){
-            return false;
+            return columna == 2;
         }
  };
     private void cargarcombo(){ 
@@ -210,6 +218,7 @@ private DefaultTableModel modelo = new DefaultTableModel(){
       private void cargarFilas() {
        Alumno alum = (Alumno) ListaAlumnoCombo.getSelectedItem();
        lista = inscripcionData.obtenerInscripcionesPorAlumno(alum.getIdAlumno());
+       listaOriginal = new ArrayList<>(lista);
        for  (Inscripcion insc :lista) {
        Materia mat = insc.getMateria();
         modelo.addRow(new Object[]{
@@ -225,7 +234,5 @@ private DefaultTableModel modelo = new DefaultTableModel(){
         for (int i = fila ; i >= 0 ; i--) {
             modelo.removeRow(i);
         }
-        
-        
     }
 }

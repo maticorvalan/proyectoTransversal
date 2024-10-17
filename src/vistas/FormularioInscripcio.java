@@ -25,18 +25,15 @@ public class FormularioInscripcio extends javax.swing.JInternalFrame {
     private MateriaData materiaData = new MateriaData(conexion);
     private InscripcionData InscripData = new persistencia.InscripcionData(conexion);
     private AlumnoData AlumData = new persistencia.AlumnoData(conexion);
-    private DefaultTableModel modelo;
     private List<Materia> ListaMat;
     private List<Alumno> ListaAlum;
+    private List<Inscripcion> ListaInsc;
             
     public FormularioInscripcio() {
         initComponents();
-        
-        modelo = new DefaultTableModel();
+        armarTabla();
         ListaAlum = AlumData.listaAlumno();
-        
         mostrarAlum();
-        jTableInsc.setModel(modelo);
     }
 
     /**
@@ -117,19 +114,16 @@ public class FormularioInscripcio extends javax.swing.JInternalFrame {
         });
 
         Salir.setText("Salir");
+        Salir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SalirActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(87, 87, 87)
-                .addComponent(Inscribir)
-                .addGap(90, 90, 90)
-                .addComponent(AnularInsc)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(Salir)
-                .addGap(101, 101, 101))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
@@ -137,9 +131,6 @@ public class FormularioInscripcio extends javax.swing.JInternalFrame {
                         .addComponent(jLabel2)
                         .addGap(58, 58, 58)
                         .addComponent(AlumnoBox, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(74, 74, 74)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(112, 112, 112)
                         .addComponent(MatInscriptas)
@@ -159,6 +150,19 @@ public class FormularioInscripcio extends javax.swing.JInternalFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addGap(255, 255, 255))))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(87, 87, 87)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(Inscribir)
+                        .addGap(90, 90, 90)
+                        .addComponent(AnularInsc)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(Salir)
+                        .addGap(101, 101, 101))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -173,31 +177,38 @@ public class FormularioInscripcio extends javax.swing.JInternalFrame {
                     .addComponent(AlumnoBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(53, 53, 53)
                 .addComponent(jLabel3)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(83, 83, 83)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(Inscribir)
-                            .addComponent(AnularInsc)
-                            .addComponent(Salir)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(31, 31, 31)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(MatNoInscriptas)
-                            .addComponent(MatInscriptas))))
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addGap(31, 31, 31)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(MatNoInscriptas)
+                    .addComponent(MatInscriptas))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Inscribir)
+                    .addComponent(AnularInsc)
+                    .addComponent(Salir))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void AlumnoBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AlumnoBoxActionPerformed
-        // TODO add your handling code here:
+        MatInscriptas.setSelected(false);
+        MatNoInscriptas.setSelected(false);
+        Limpiar();
+        if (AlumnoBox.getSelectedItem() == null) {
+            MatNoInscriptas.setEnabled(false);
+            MatInscriptas.setEnabled(false);
+        } else {
+            MatNoInscriptas.setEnabled(true);
+            MatInscriptas.setEnabled(true);
+        }
     }//GEN-LAST:event_AlumnoBoxActionPerformed
 
     private void MatInscriptasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MatInscriptasActionPerformed
+
        Limpiar();
        MatNoInscriptas.setSelected(false);
        inscript();
@@ -237,6 +248,10 @@ public class FormularioInscripcio extends javax.swing.JInternalFrame {
        }
     }//GEN-LAST:event_AnularInscActionPerformed
 
+    private void SalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SalirActionPerformed
+        dispose();
+    }//GEN-LAST:event_SalirActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<Alumno> AlumnoBox;
@@ -253,15 +268,25 @@ public class FormularioInscripcio extends javax.swing.JInternalFrame {
     private javax.swing.JTable jTableInsc;
     // End of variables declaration//GEN-END:variables
  
-    public boolean isCellEditable(int fila, int columna){
+    private DefaultTableModel modelo = new DefaultTableModel(){
+        public boolean isCellEditable(int fila, int columna){
             return false;
         }
- 
+    };
        private void mostrarAlum(){
+           AlumnoBox.addItem(null);
            for(Alumno a : ListaAlum){
                AlumnoBox.addItem(a);
            }
+           MatNoInscriptas.setEnabled(false);
+           MatInscriptas.setEnabled(false);
        }
+        private void armarTabla(){
+            modelo.addColumn("Codigo"); 
+            modelo.addColumn("Materia");
+            modelo.addColumn("Descripcion"); 
+            jTableInsc.setModel(modelo);
+    }
        
        private void Limpiar(){
            int i = modelo.getRowCount() -1;
@@ -273,10 +298,13 @@ public class FormularioInscripcio extends javax.swing.JInternalFrame {
        
        private void inscript(){
            Alumno A = (Alumno)AlumnoBox.getSelectedItem();
-           ListaMat = (List)InscripData.obtenerMateriasCursadas(A.getIdAlumno());
-           for (Materia m: ListaMat){
-               modelo.addRow(new Object[] {m.getId_materia(), m.getNombre(), m.getDescripción()}); 
-         
+           ListaMat = InscripData.obtenerMateriasCursadas(A.getIdAlumno());
+           for (Materia mat: ListaMat){
+               modelo.addRow(new Object[] {
+                   mat.getId_materia(),
+                   mat.getNombre(),
+                   mat.getDescripción()
+               });
            }
        }
        
@@ -288,16 +316,5 @@ public class FormularioInscripcio extends javax.swing.JInternalFrame {
          
            }
        }
-       
-     
-      /*private void cargarFilas() {
-        for (Inscripcion ListaInsc : materiaData.getMaterias()) {
-            modelo.addRow(new Object[]{
-                ListaInsc.getId_materia(),
-                ListaInsc.getNombre(),
-                ListaInsc.getAño(),                         
-            
-        }    
-    }*/
 }
 

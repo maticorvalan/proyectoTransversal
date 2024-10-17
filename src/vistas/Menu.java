@@ -79,6 +79,11 @@ public class Menu extends javax.swing.JFrame {
         jMenuBar1.add(jMenu2);
 
         jMenu3.setText("Inscripciones");
+        jMenu3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenu3MouseClicked(evt);
+            }
+        });
         jMenuBar1.add(jMenu3);
 
         jMenu4.setText("Notas");
@@ -140,13 +145,22 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenu4ActionPerformed
 
     private void jMenu4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu4MouseClicked
-      Escritorio.removeAll();
+        Escritorio.removeAll();
         Escritorio.repaint();
         VistaNota vn = new VistaNota();
         vn.setVisible(true);
         Escritorio.add(vn);
         Escritorio.moveToFront(vn);
     }//GEN-LAST:event_jMenu4MouseClicked
+
+    private void jMenu3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu3MouseClicked
+        Escritorio.removeAll();
+        Escritorio.repaint();
+        FormularioInscripcio fi = new FormularioInscripcio();
+        fi.setVisible(true);
+        Escritorio.add(fi);
+        Escritorio.moveToFront(fi);
+    }//GEN-LAST:event_jMenu3MouseClicked
 
     /**
      * @param args the command line arguments

@@ -141,14 +141,14 @@ public class InscripcionData {
         return lista;
     }
     
-    public List<Materia> obtenerMateriasCursadas(int idMateria){
+    public List<Materia> obtenerMateriasCursadas(int idAlumno){
         ArrayList<Materia> materias = new ArrayList<>();
-        String query = "SELECT inscripcion.idMateria,nombre,descripcion FROM inscripcion,"
-                        + " materia WHERE inscripcion.idMateria = materia.idMateria"
-                        + " AND inscripcion.idAlumno = ?"; //REVISAR-- 
+        String query = "SELECT inscripcion.idMateria,materia.nombre,materia.descripcion FROM inscripcion,"
+                        + "materia WHERE inscripcion.idMateria = materia.idMateria"
+                        + " AND inscripcion.idAlumno = ?";
         try {
             PreparedStatement ps = conexion.prepareStatement(query);
-            ps.setInt(1, idMateria);
+            ps.setInt(1, idAlumno);
             ResultSet rs = ps.executeQuery();
             while(rs.next()){
                 Materia materia = new Materia();
@@ -178,8 +178,7 @@ public class InscripcionData {
                 Materia materia = new Materia();
                 materia.setId_materia(rs.getInt("idMateria"));
                 materia.setNombre(rs.getString("nombre"));
-                materia.setDescripción(rs.getString("descripcion"));
-                materia.setEstado(rs.getBoolean("estado"));
+                materia.setDescripción(rs.getString("descripcion"));   
                 materias.add(materia);
             }
             ps.close();
